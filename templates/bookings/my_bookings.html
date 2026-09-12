@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Bookings — Staycomfy{% endblock %}
+
+{% block content %}
+<section class="section bookings-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">My Bookings</h2>
+            <p class="section-subtitle">Manage your upcoming and past stays</p>
+        </div>
+
+        {% if bookings %}
+        <div class="bookings-list">
+            {% for booking in bookings %}
+            <div class="booking-card glass-card {% if booking.status == 'cancelled' %}cancelled{% endif %}">
+                <div class="booking-card-image">
+                    {% if booking.hotel.image %}
+                        <img src="{{ booking.hotel.image.url }}" alt="{{ booking.hotel.name }}">
+                    {% else %}
+                        <div class="placeholder-image small"><span>✦</span></div>
+                    {% endif %}
+                </div>
+                <div class="booking-card-body">
+                    <div class="booking-card-header">
+                        <h3>{{ booking.hotel.name }}</h3>
+                        <span class="status-badge status-{{ booking.status }}">
+                            {{ booking.get_status_display }}
+                        </span>
+                    </div>
+                    <p class="booking-room">{{ booking.room.name }}</p>
+
+                    <div class="booking-details-grid">
+                        <div class="booking-detail">
+                            <span class="detail-label">Check-in</span>
+                            <span class="detail-value">{{ booking.check_in|date:"M d, Y" }}</span>
+                        </div>
+                        <div class="booking-detail">
+                            <span class="detail-label">Check-out</span>
+                            <span class="detail-value">{{ booking.check_out|date:"M d, Y" }}</span>
+                        </div>
+                        <div class="booking-detail">
+                            <span class="detail-label">Nights</span>
+                            <span class="detail-value">{{ booking.num_nights }}</span>
+                        </div>
+                        <div class="booking-detail">
+                            <span class="detail-label">Guests</span>
+                            <span class="detail-value">{{ booking.guests }}</span>
+                        </div>
+                        <div class="booking-detail">
+                            <span class="detail-label">Total</span>
+                            <span class="detail-value price">${{ booking.total_price }}</span>
+                        </div>
+                        <div class="booking-detail">
+                            <span class="detail-label">Booked on</span>
+                            <span class="detail-value">{{ booking.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+
+                    {% if booking.can_cancel %}
+                    <form method="post" action="{% url 'cancel_booking' booking.pk %}" class="cancel-form"
+                          onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Cancel Booking</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state glass-card">
+            <div class="empty-icon">✦</div>
+            <h3>No Bookings Yet</h3>
+            <p>You haven't made any bookings. Explore our hotels and find your perfect stay!</p>
+            <a href="{% url 'home' %}" class="btn btn-glow">Browse Hotels</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

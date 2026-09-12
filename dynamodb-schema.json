@@ -1,0 +1,152 @@
+{
+  "Tables": [
+    {
+      "TableName": "staycomfy-hotels",
+      "KeySchema": [
+        {
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        }
+      ],
+      "AttributeDefinitions": [
+        {
+          "AttributeName": "id",
+          "AttributeType": "S"
+        }
+      ],
+      "BillingMode": "PAY_PER_REQUEST",
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "Staycomfy"
+        },
+        {
+          "Key": "Environment",
+          "Value": "Production"
+        }
+      ]
+    },
+    {
+      "TableName": "staycomfy-rooms",
+      "KeySchema": [
+        {
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "hotel_id",
+          "KeyType": "RANGE"
+        }
+      ],
+      "AttributeDefinitions": [
+        {
+          "AttributeName": "id",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "hotel_id",
+          "AttributeType": "S"
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "hotel-id-index",
+          "KeySchema": [
+            {
+              "AttributeName": "hotel_id",
+              "KeyType": "HASH"
+            }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "BillingMode": "PAY_PER_REQUEST",
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "Staycomfy"
+        },
+        {
+          "Key": "Environment",
+          "Value": "Production"
+        }
+      ]
+    },
+    {
+      "TableName": "staycomfy-users",
+      "KeySchema": [
+        {
+          "AttributeName": "email",
+          "KeyType": "HASH"
+        }
+      ],
+      "AttributeDefinitions": [
+        {
+          "AttributeName": "email",
+          "AttributeType": "S"
+        }
+      ],
+      "BillingMode": "PAY_PER_REQUEST",
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "Staycomfy"
+        },
+        {
+          "Key": "Environment",
+          "Value": "Production"
+        }
+      ]
+    },
+    {
+      "TableName": "staycomfy-bookings",
+      "KeySchema": [
+        {
+          "AttributeName": "id",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "user_email",
+          "KeyType": "RANGE"
+        }
+      ],
+      "AttributeDefinitions": [
+        {
+          "AttributeName": "id",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "user_email",
+          "AttributeType": "S"
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "user-email-index",
+          "KeySchema": [
+            {
+              "AttributeName": "user_email",
+              "KeyType": "HASH"
+            }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "BillingMode": "PAY_PER_REQUEST",
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "Staycomfy"
+        },
+        {
+          "Key": "Environment",
+          "Value": "Production"
+        }
+      ]
+    }
+  ]
+}

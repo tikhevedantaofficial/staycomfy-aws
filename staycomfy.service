@@ -1,0 +1,24 @@
+[Unit]
+Description=Staycomfy Django Application
+After=network.target
+
+[Service]
+Type=notify
+User=ec2-user
+WorkingDirectory=/opt/staycomfy
+Environment="PATH=/opt/staycomfy/venv/bin"
+EnvironmentFile=/opt/staycomfy/.env
+ExecStart=/opt/staycomfy/venv/bin/gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=append:/var/log/staycomfy/application.log
+StandardError=append:/var/log/staycomfy/error.log
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

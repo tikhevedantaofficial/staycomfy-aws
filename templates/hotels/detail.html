@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ hotel.name }} — Staycomfy{% endblock %}
+
+{% block content %}
+<section class="section detail-section">
+    <div class="container">
+        <!-- Back link -->
+        <a href="{% url 'home' %}" class="back-link">← Back to Hotels</a>
+
+        <!-- Hotel Header -->
+        <div class="detail-header glass-card">
+            <div class="detail-image">
+                {% if hotel.image %}
+                    <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+                {% else %}
+                    <div class="placeholder-image large">
+                        <span>✦</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="detail-info">
+                <div class="detail-rating">
+                    <span class="star">★</span> {{ hotel.rating }} / 5.0
+                </div>
+                <h1 class="detail-title">{{ hotel.name }}</h1>
+                <p class="detail-location">
+                    <span class="location-icon">📍</span> {{ hotel.city }}
+                </p>
+                <p class="detail-description">{{ hotel.description }}</p>
+            </div>
+        </div>
+
+        <!-- Rooms -->
+        <div class="rooms-section">
+            <h2 class="section-title">Available Rooms</h2>
+
+            {% if rooms %}
+            <div class="room-grid">
+                {% for room in rooms %}
+                <div class="room-card glass-card">
+                    <div class="room-card-image">
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                        {% else %}
+                            <div class="placeholder-image small">
+                                <span>✦</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="room-card-body">
+                        <h3 class="room-card-title">{{ room.name }}</h3>
+                        <p class="room-card-desc">{{ room.description|truncatewords:15 }}</p>
+                        <div class="room-card-meta">
+                            <span class="meta-item">
+                                <span class="meta-icon">💰</span>
+                                ${{ room.price_per_night }}/night
+                            </span>
+                            <span class="meta-item">
+                                <span class="meta-icon">👥</span>
+                                Up to {{ room.capacity }} guests
+                            </span>
+                        </div>
+                        <a href="{% url 'create_booking' hotel.pk room.pk %}" class="btn btn-glow btn-sm">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state glass-card">
+                <h3>No Rooms Available</h3>
+                <p>This hotel currently has no rooms listed. Check back soon!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

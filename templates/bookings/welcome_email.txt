@@ -1,0 +1,40 @@
+Welcome to {{ hotel_name }}!
+
+Dear {{ guest_name }},
+
+We are absolutely delighted to welcome you to {{ hotel_name }} in beautiful {{ hotel_city }}! Your room is ready, and our team is excited to make your stay unforgettable.
+
+Your Check-in Day is Today: {{ check_in }}
+
+BOOKING DETAILS
+================
+Hotel: {{ hotel_name }}
+Room: {{ room_name }}
+Check-in: {{ check_in }}
+Check-out: {{ check_out }}
+Duration: {{ num_nights }} night(s)
+Guests: {{ guests }}
+Total: ${{ total_price }}
+
+WHAT TO EXPECT DURING YOUR STAY
+================================
+- Luxurious room with premium amenities
+- Complimentary high-speed Wi-Fi
+- 24/7 concierge service
+- Access to our spa and wellness center
+- Gourmet dining at our on-site restaurant
+- Daily housekeeping service
+
+CHECK-IN INFORMATION
+====================
+Our front desk is open 24/7 to assist you. Please have your booking confirmation and ID ready for a smooth check-in process. If you need any assistance during your stay, don't hesitate to contact our front desk team.
+
+We hope you have a wonderful stay at {{ hotel_name }}. If there's anything we can do to make your experience even more special, please let us know!
+
+Warm regards,
+The {{ hotel_name }} Team
+
+---
+Staycomfy — Where Comfort Meets Elegance
+This is an automated message. Please do not reply to this email.
+For support, contact us at support@staycomfy.com

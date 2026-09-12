@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Staycomfy — Where Comfort Meets Elegance{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">✦  Curated Luxury Hotels</div>
+        <h1 class="hero-title">
+            Your Home<br>
+            <span class="gradient-text">Away From Home</span>
+        </h1>
+        <p class="hero-subtitle">
+            Handpicked hotels offering warmth, elegance, and unforgettable experiences.
+            Find your perfect retreat.
+        </p>
+        <a href="#hotels" class="btn btn-glow">
+            Explore Our Hotels
+            <span class="btn-arrow">→</span>
+        </a>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-orb"></div>
+        <div class="hero-ring ring-1"></div>
+        <div class="hero-ring ring-2"></div>
+    </div>
+</section>
+
+<!-- Hotels Section -->
+<section class="section hotels-section" id="hotels">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Hotels</h2>
+            <p class="section-subtitle">Curated destinations for the modern traveler</p>
+        </div>
+
+        {% if hotels %}
+        <div class="hotel-grid">
+            {% for hotel in hotels %}
+            <div class="hotel-card glass-card">
+                <div class="hotel-card-image">
+                    {% if hotel.image %}
+                        <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+                    {% else %}
+                        <div class="placeholder-image">
+                            <span>✦</span>
+                        </div>
+                    {% endif %}
+                    <div class="hotel-card-rating">
+                        <span class="star">★</span> {{ hotel.rating }}
+                    </div>
+                </div>
+                <div class="hotel-card-body">
+                    <h3 class="hotel-card-title">{{ hotel.name }}</h3>
+                    <p class="hotel-card-location">
+                        <span class="location-icon">📍</span> {{ hotel.city }}
+                    </p>
+                    <p class="hotel-card-desc">{{ hotel.description|truncatewords:20 }}</p>
+                    <a href="{% url 'hotel_detail' hotel.pk %}" class="btn btn-outline">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state glass-card">
+            <div class="empty-icon">✦</div>
+            <h3>No Hotels Available Yet</h3>
+            <p>Check back soon — new luxury destinations are being added.</p>
+            {% if user.is_staff %}
+                <p><a href="/admin/hotels/hotel/add/" class="btn btn-glow">Add a Hotel (Admin)</a></p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
